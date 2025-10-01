@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>로또보감 — 결제 데모</title>
+  <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+  <style>
+    body{font-family:system-ui,-apple-system,sans-serif;background:#0B1221;color:white;margin:0}
+    .wrap{max-width:880px;margin:40px auto;padding:0 16px}
+    .card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:16px}
+    .row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+    input{background:rgba(255,255,255,.08);color:white;border:1px solid rgba(255,255,255,.2);padding:8px;border-radius:8px}
+    button{background:white;border:none;color:#0B1221;font-weight:600;padding:10px 16px;border-radius:12px;cursor:pointer}
+    a.btn{background:#C6F432;color:#0B1221;font-weight:700;padding:10px 16px;border-radius:12px;text-decoration:none}
+    small{color:#8ea3c6}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>로또보감 — 결제 데모</h1>
+  <p class="card">이 데모는 토스 <b>테스트</b> 키로 동작하며, <b>정보 제공용</b> 예시입니다.</p>
+
+  <div class="card">
+    <div class="row">
+      <label>금액(원)</label>
+      <input id="amount" type="number" min="100" step="100" value="9900"/>
+    </div>
+    <div class="row">
+      <label>상품명</label>
+      <input id="orderName" value="주간 로또 리포트 (PDF)" style="flex:1"/>
+    </div>
+
+    <div id="_methods" class="card" style="background:rgba(255,255,255,.03)"></div>
+    <div id="_agreements" class="card" style="background:rgba(255,255,255,.03)"></div>
+
+    <div class="row" style="justify-content:space-between">
+      <button id="btnInit">결제수단 로드</button>
+      <a href="success.html" class="btn" id="btnBuy">결제하기</a>
+    </div>
+    <small>* 반드시 서버에서 /payments/verify 로 승인검증을 수행하세요.</small>
+  </div>
+
+  <p style="margin-top:24px"><a class="btn" href="README.md" target="_blank">README 보기</a></p>
+</div>
+
+<script>
+  // ★ 여기에 본인 테스트 clientKey 넣기 (토스 대시보드 > 테스트 키)
+  const WIDGET_CLIENT_KEY = 'test_gck_여기에_클라이언트키';
+  const SERVER_BASE = 'http://localhost:8000';
+
+  const amountEl = document.getElementById('amount');
+  const orderNameEl = document.getElementById('orderName');
+  const btnInit = document.getElementById('btnInit');
+  const btnBuy = document.getElementById('btnBuy');
+
+  let widget = null;
+
+  btnInit.addEventListener('click', async () => {
+    try {
+      const PaymentWidget = window.PaymentWidget;
+      if (!PaymentWidget) {
+        alert('PaymentWidget 로드 실패. 광고차단(AdBlock)이나 네트워크를 확인하세요.');
+        return;
+      }
+      widget = PaymentWidget(WIDGET_CLIENT_KEY, 'demo-user');
+      await widget.renderPaymentMethods('#_methods', { value: Number(amountEl.value || 0) });
+      await widget.renderAgreement('#_agreements');
+      alert('결제수단이 로드됐습니다.');
+    } catch (e) {
+      console.error(e);
+      alert('결제수단 로드 중 오류: ' + e.message);
+    }
+  });
+
+  btnBuy.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (!widget) {
+      alert('먼저 "결제수단 로드"를 눌러주세요.');
+      return;
+    }
+    const amount = Number(amountEl.value || 0);
+    const orderName = orderNameEl.value || '상품';
+    const fileId = 'sample';
+    const orderId = `ORD-${Math.random().toString(36).slice(2,8)}-${Date.now()}`;
+
+    // 1) 서버에 주문 생성
+    await fetch(SERVER_BASE + '/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: 'demo-user', file_id: fileId, amount, merchant_uid: orderId })
+    });
+
+    // 2) 결제 요청
+    const base = new URL(window.location.href);
+    base.pathname = base.pathname.replace(/index\.html?$/, '');
+    await widget.requestPayment({
+      orderId,
+      orderName,
+      successUrl: base.origin + base.pathname + 'success.html',
+      failUrl: base.origin + base.pathname + 'fail.html',
+      customerEmail: 'demo@lottobogam.com',
+      customerName: '데모회원'
+    });
+  });
+</script>
+</body>
+</html>
