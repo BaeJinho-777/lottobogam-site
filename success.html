@@ -1,1 +1,29 @@
-<!doctype html><html lang='ko'><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width, initial-scale=1'/><title>결제 성공 — LottoBogam</title><style>body{font-family:system-ui,-apple-system,sans-serif;background:#0B1221;color:white;margin:0}.wrap{max-width:800px;margin:40px auto;padding:0 16px}.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:16px}a.btn{background:#C6F432;color:#0B1221;font-weight:700;padding:10px 16px;border-radius:12px;text-decoration:none}code{background:rgba(255,255,255,.12);padding:2px 6px;border-radius:8px}</style></head><body><div class='wrap'><h1>결제 성공</h1><div class='card'><p>토스에서 전달한 파라미터를 서버로 전송하여 <b>승인·검증</b>을 완료합니다.</p><pre id='raw'></pre><div id='result'></div></div><p style='margin-top:20px'><a href='index.html' class='btn'>처음으로</a></p></div><script>const SERVER_BASE='http://localhost:8000';const params=new URLSearchParams(location.search);const paymentKey=params.get('paymentKey');const orderId=params.get('orderId');const amount=Number(params.get('amount')||0);document.getElementById('raw').textContent='paymentKey='+paymentKey+'\norderId='+orderId+'\namount='+amount;(async()=>{try{const r=await fetch(SERVER_BASE+'/payments/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({merchant_uid:orderId,payment_key:paymentKey,paid_amount:amount})});const j=await r.json();if(!r.ok) throw new Error(JSON.stringify(j));const t=await fetch(SERVER_BASE+'/download/token?user_id='+encodeURIComponent(j.order.user_id)+'&file_id='+encodeURIComponent(j.order.file_id));const tj=await t.json();const link=SERVER_BASE+'/download?token='+encodeURIComponent(tj.token);document.getElementById('result').innerHTML='<p><a class="btn" href="'+link+'">리포트 다운로드</a></p>'}catch(e){document.getElementById('result').innerHTML='<p style="color:#ff9">서버 검증 실패: '+e.message+'</p>'}})();</script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>결제 성공 - 로또보감</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; }
+    main { max-width: 680px; margin: 64px auto; padding: 0 16px; text-align: center; }
+    .btns a { display: inline-block; padding: 10px 16px; text-decoration: none; border: 1px solid #ccc; border-radius: 8px; margin: 6px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>결제가 완료되었습니다 🎉</h1>
+    <p>구매해 주셔서 감사합니다. 전자책은 <strong>이메일 또는 마이페이지</strong>에서 다운로드 링크로 제공됩니다.</p>
+    <p>문의: <a href="mailto:wlsgh369741@naver.com">wlsgh369741@naver.com</a> · 010-5012-2011</p>
+    <div class="btns">
+      <a href="/">홈으로 가기</a>
+      <a href="/products/index.html">전자책 보러가기</a>
+    </div>
+  </main>
+
+  <!-- 푸터 자리 -->
+  <div id="footer"></div>
+<script>fetch('/footer.html').then(r=>r.text()).then(h=>{document.getElementById('footer').innerHTML=h;});</script>
+</body>
+</html>

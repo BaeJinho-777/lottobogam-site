@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>로또보감 전자책 VOL.1 - 상세</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; background:#0f172a; color:#e2e8f0; }
+    main { max-width: 860px; margin: 40px auto; padding: 0 16px; }
+    .wrap { display:grid; grid-template-columns: 280px 1fr; gap:24px; }
+    .wrap img { width:100%; border-radius:10px; border:1px solid #334155; }
+    .muted { color:#94a3b8; }
+    .btn { padding:10px 14px; border-radius:10px; border:1px solid #334155; background:#16a34a; color:white; text-decoration:none; display:inline-block; }
+    .btn[disabled] { background:#334155; color:#cbd5e1; cursor:not-allowed; }
+    section { margin-top:18px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>로또보감 전자책 VOL.1 (샘플)</h1>
+    <div class="wrap">
+      <img src="https://placehold.co/640x900?text=EBOOK%20COVER"
+     alt="전자책 표지" width="320" height="480"
+     loading="lazy" decoding="async"
+     style="width:100%; height:auto; border-radius:10px; border:1px solid #334155; box-shadow:0 8px 24px rgba(0,0,0,.25); object-fit:cover;" />
+
+      <div>
+        <p class="muted">디지털 콘텐츠 · PDF</p>
+        <p><strong>가격: 19,800원 (부가세 포함)</strong></p>
+
+        <section>
+          <h2>상품 설명</h2>
+          <p>로또 통계·패턴 분석을 바탕으로 제작한 PDF 전자책입니다. 결제 후 즉시 열람/다운로드 링크가 제공됩니다.</p>
+        </section>
+
+        <section>
+          <h2>제공 방식</h2>
+          <ul>
+            <li>형태: PDF(디지털콘텐츠)</li>
+            <li>전달: 결제 후 이메일/마이페이지에서 다운로드 링크 제공</li>
+            <li>이용기간: 제한 없음(개인적 이용만)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>환불 안내</h2>
+          <p>디지털 특성상 <strong>다운로드 또는 열람 이후 환불 제한</strong>입니다. 다운로드/열람 <strong>이전</strong>에는 결제일로부터 7일 이내 환불 가능. 파일 오류·미제공 등 하자 시 전액 환불 또는 재제공합니다. 자세한 기준은 <a href="/refund.html">취소·환불정책</a>을 확인하세요.</p>
+        </section>
+
+        <section>
+          <h2>구매안전(에스크로) 안내</h2>
+          <p>로또보감은 <strong>토스페이먼츠 구매안전(에스크로)</strong> 서비스를 이용합니다. 결제대금은 구매확정 전까지 안전하게 보호됩니다.</p>
+        </section>
+
+        <!-- PG 심사 단계: 버튼 비활성화(연동 후 활성화) -->
+        <p><button class="btn" disabled>결제 준비 중 (PG 심사 완료 후 활성화)</button></p>
+
+        <p class="muted"><a href="/products/index.html" class="btn" style="background:#334155;">목록으로</a></p>
+      </div>
+    </div>
+
+    <section>
+      <h2>고객센터</h2>
+      <p>문의: 010-5012-2011 · <a href="mailto:wlsgh369741@naver.com">wlsgh369741@naver.com</a></p>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+  <script>
+    fetch('../footer.html').then(r=>r.text()).then(h=>{document.getElementById('footer').innerHTML=h;});
+  </script>
+</body>
+</html>

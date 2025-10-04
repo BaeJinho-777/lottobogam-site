@@ -41,7 +41,18 @@
     <small>* 반드시 서버에서 /payments/verify 로 승인검증을 수행하세요.</small>
   </div>
 
-  <p style="margin-top:24px"><a class="btn" href="README.md" target="_blank">README 보기</a></p>
+  <p style="margin-top:24px; white-space:nowrap;">
+  <a class="btn" href="README.md" target="_blank" rel="noopener noreferrer">README 보기</a>
+  <a href="/products/index.html"
+     class="btn"
+     style="background:#16a34a; color:#fff; display:inline-block; padding:10px 14px; border-radius:8px; text-decoration:none; margin-left:8px;">
+    전자책 보러가기
+  </a>
+</p>
+
+
+
+
 </div>
 
 <script>
@@ -104,5 +115,7 @@
     });
   });
 </script>
+<div id="footer"></div>
+<script>fetch('/footer.html').then(r=>r.text()).then(h=>{document.getElementById('footer').innerHTML=h;});</script>
 </body>
 </html>

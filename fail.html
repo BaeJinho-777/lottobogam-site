@@ -1,1 +1,29 @@
-<!doctype html><html lang='ko'><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width, initial-scale=1'/><title>결제 실패 — LottoBogam</title><style>body{font-family:system-ui,-apple-system,sans-serif;background:#0B1221;color:white;margin:0}.wrap{max-width:800px;margin:40px auto;padding:0 16px}.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:16px}a.btn{background:white;color:#0B1221;font-weight:700;padding:10px 16px;border-radius:12px;text-decoration:none}</style></head><body><div class='wrap'><h1>결제 실패</h1><div class='card'><p>실패 정보:</p><pre id='raw'></pre></div><p style='margin-top:20px'><a href='index.html' class='btn'>처음으로</a></p></div><script>const params=new URLSearchParams(location.search);const code=params.get('code');const message=params.get('message');document.getElementById('raw').textContent='code='+code+'\nmessage='+message;</script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>결제 실패 - 로또보감</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; }
+    main { max-width: 680px; margin: 64px auto; padding: 0 16px; text-align: center; }
+    .msg { color: #b00020; font-weight: 700; }
+    .btns a { display: inline-block; padding: 10px 16px; text-decoration: none; border: 1px solid #ccc; border-radius: 8px; margin: 6px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 class="msg">결제가 실패했어요 😢</h1>
+    <p>일시적인 오류일 수 있어요. 잠시 후 다시 시도해 주세요.</p>
+    <p>계속 문제가 있으면 고객센터로 연락 주세요: <a href="mailto:wlsgh369741@naver.com">wlsgh369741@naver.com</a> · 010-5012-2011</p>
+    <div class="btns">
+      <a href="/">홈으로 가기</a>
+      <a href="/products/index.html">다른 결제 시도</a>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+<script>fetch('/footer.html').then(r=>r.text()).then(h=>{document.getElementById('footer').innerHTML=h;});</script>
+</body>
+</html>

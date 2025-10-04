@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>전자책 상품 - 로또보감</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; background:#0f172a; color:#e2e8f0; }
+    main { max-width: 960px; margin: 40px auto; padding: 0 16px; }
+    h1 { margin-bottom: 16px; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+    .card { background:#111827; border:1px solid #334155; border-radius:12px; padding:16px; text-decoration:none; color:inherit; }
+    .card img { width:100%; border-radius:8px; display:block; }
+    .card strong { display:block; margin:10px 0 6px; font-size:18px; }
+    .price { opacity:.9; }
+    a.btn { display:inline-block; margin-top:12px; padding:8px 12px; border:1px solid #334155; border-radius:8px; text-decoration:none; color:#e2e8f0; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>전자책 상품</h1>
+    <p>아래 상품은 실제로 판매 가능한 예시입니다. 가격은 <strong>부가세 포함</strong>으로 표기돼요.</p>
+
+    <div class="grid">
+      <a class="card" href="/products/ebook-vol1.html">
+        <img src="https://via.placeholder.com/640x900?text=EBOOK+COVER" alt="로또보감 전자책 VOL.1 표지" />
+        <strong>로또보감 전자책 VOL.1 (샘플)</strong>
+        <span class="price">가격: 19,800원 (부가세 포함)</span>
+        <span class="btn">상세 보기</span>
+      </a>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+  <script>
+    // 하위 폴더니까 ../ 로 한 단계 위의 footer.html을 불러옵니다.
+    fetch('../footer.html').then(r=>r.text()).then(h=>{document.getElementById('footer').innerHTML=h;});
+  </script>
+</body>
+</html>
